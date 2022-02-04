@@ -1,5 +1,5 @@
 # Coupled regularized sample covariance matrix estimator for multiple classes
-This repository contains MATLAB, Python, and R code for the paper E. Raninen and E. Ollila, "Coupled Regularized Sample Covariance Matrix Estimator for Multiple Classes," in IEEE Transactions on Signal Processing, vol. 69, pp. 5681-5692, 2021, doi: [10.1109/TSP.2021.3118546](https://dx.doi.org/10.1109/TSP.2021.3118546).
+This repository contains MATLAB, Python, and R code for the paper E. Raninen and E. Ollila, "Coupled Regularized Sample Covariance Matrix Estimator for Multiple Classes," in IEEE Transactions on Signal Processing, vol. 69, pp. 5681-5692, 2021, doi: [10.1109/TSP.2021.3118546](https://doi.org/10.1109/TSP.2021.3118546).
 
 ## Abstract
 
