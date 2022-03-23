@@ -78,7 +78,7 @@ def generate_multivariate_t_samples(mu, Sigma, df, n, p):
     X : ndarray of shape (n, p)
         Array of samples
     """
-    assert(df > 2)
+    assert df > 2
 
     # N(0,Sigma*(df-2)/df)
     Z = np.random.multivariate_normal(np.zeros(p), Sigma*(df-2)/df, n)
@@ -146,7 +146,7 @@ def spatialmedian(X):
     X = np.array(X)
     m = X.mean(axis=0)
     iterMAX = 2000
-    for i in range(iterMAX):
+    for iteration in range(iterMAX):
         m0 = m
 
         d = X - m
@@ -158,7 +158,8 @@ def spatialmedian(X):
         crit = linalg.norm(m0-m)/linalg.norm(m0)
         if crit < 1e-6:
             return m
-    print("spatial median: slow convergence. crit:", crit)
+    if iteration == iterMAX:
+        print("spatial median: slow convergence. crit:", crit)
     return m
 
 
@@ -468,7 +469,7 @@ def rscmpool(params, averaging=False, compute_inverse=False):
         return -1/2*(a**2*C["21"]+a*C["11"]+C["01"])/(a**2*C["22"]+C["02"])
 
     iterMAX = 1000
-    for iter in range(iterMAX):
+    for iteration in range(iterMAX):
         alpha0 = np.copy(alpha)
         beta0 = np.copy(beta)
         alpha = np.clip(opt_al(beta), 0, 1)
@@ -476,7 +477,7 @@ def rscmpool(params, averaging=False, compute_inverse=False):
         crit = linalg.norm(alpha-alpha0 + beta-beta0)/linalg.norm(alpha0+beta0)
         if crit < 1e-8:
             break
-    if iter == iterMAX:
+    if iteration == iterMAX:
         print('rscmpool: slow convergence.')
 
     # averaging of the tuning parameters
@@ -786,17 +787,20 @@ def linpool(params, linmethod='LIN2'):
     # Solve the pooled estimators for each class
     from scipy.optimize import minimize
     from scipy.optimize import Bounds
+    
     bnds = Bounds(0, np.inf)
-
+    objfun = lambda x: 0.5*(x.dot(D+C)).dot(x) - C[:, k].dot(x)
+    jacobian = lambda x: x.dot(D+C) - C[:, k]
+    
     # For covariance estimates
     Sigmas = list()
 
+
+    
     for k in range(K):
         # solve coefficients of linear combination
         if any(A0[:, k] < 0):
             # optimizes for nonnegative coefficients
-            objfun = lambda x: 0.5*(x.dot(D+C)).dot(x) - C[:, k].dot(x)
-            jacobian = lambda x: x.dot(D+C) - C[:, k]
             res = minimize(objfun, A0[:, k], jac=jacobian, bounds=bnds)
             A[:, k] = res.x
         else:

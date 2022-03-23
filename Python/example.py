@@ -8,7 +8,8 @@ import pandas as pd
 import multiclass_rscm as pool
 np.random.seed(42)
 
-"""Define simulation setup"""
+# Define simulation setup
+
 nmc = 4000  # number of Monte Carlo trials
 
 SETUP = 'C'  # choose 'A', 'B', or 'C'
@@ -50,7 +51,8 @@ else:
     print("SETUP must be either 'A', 'B', or 'C'")
 
 
-"""Run simulation"""
+# Run simulation
+
 print('Running simulation: SETUP ' + SETUP + ', averaging over '
       + str(nmc) + ' Monte Carlo trials.')
 
@@ -99,17 +101,17 @@ for mc in range(nmc):
         mse_mc['polysave'][mc, k] = pool.NSE(POLYsAve[k], C[k])
         mse_mc['lin2'][mc, k] = pool.NSE(LIN2[k], C[k])
 
-"""Print results"""
 
+# Print results
 
-# function for returning mean of normalized squared error (x10) and their sum
 def meanmse(a):
-    return (np.append(a.mean(axis=0), a.sum(axis=1).mean())*10)
+    """ function for returning mean of normalized squared error (x10) and their sum """
+    return np.append(a.mean(axis=0), a.sum(axis=1).mean())*10
 
 
-# function for returning std of normalized squared error (x10) and their sum
 def stdmse(a):
-    return (np.append(a.std(axis=0), a.sum(axis=1).std())*10)
+    """ function for returning std of normalized squared error (x10) and their sum """
+    return np.append(a.std(axis=0), a.sum(axis=1).std())*10
 
 
 mse = dict()
