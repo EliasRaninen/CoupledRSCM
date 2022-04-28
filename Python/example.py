@@ -57,10 +57,10 @@ print('Running simulation: SETUP ' + SETUP + ', averaging over '
       + str(nmc) + ' Monte Carlo trials.')
 
 # class means
-mu = [np.random.normal(1, 0, p),
-      np.random.normal(1, 0, p),
-      np.random.normal(1, 0, p),
-      np.random.normal(1, 0, p)]
+mu = [np.random.normal(0, 1, p),
+      np.random.normal(0, 1, p),
+      np.random.normal(0, 1, p),
+      np.random.normal(0, 1, p)]
 
 mse_mc = dict()
 mse_mc['poly'] = np.zeros((nmc, K))
